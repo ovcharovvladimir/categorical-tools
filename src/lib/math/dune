@@ -1,0 +1,4 @@
+(library
+ (name math)
+ (public_name tools.math)
+ (libraries zarith))
