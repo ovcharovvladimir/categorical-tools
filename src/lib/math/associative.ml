@@ -3,3 +3,4 @@ module type C = sig
   type b
   type c
 end
+[@@typeclass]

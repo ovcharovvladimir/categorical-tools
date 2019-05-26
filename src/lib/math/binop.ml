@@ -6,3 +6,7 @@ module type C = sig
   val op : a -> b -> c
 end
 [@@typeclass]
+
+type ('a, 'b, 'c) op = ?_d:('a, 'b, 'c) C._class -> 'a -> 'b -> 'c
+
+let op = C.op
