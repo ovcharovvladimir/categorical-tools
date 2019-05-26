@@ -1,4 +1,4 @@
-module type Class = sig
+module type C = sig
   type a
   type b
   type c
@@ -6,5 +6,3 @@ module type Class = sig
   val op : a -> b -> c
 end
 [@@typeclass]
-
-module type S = Class

@@ -1,3 +1,4 @@
+(*
 module M = struct
   type _ t = SQ4 : Z.t * Z.t * Z.t * Z.t -> [`CellType of Z.t] t
   type ('a, 'b) closure = 'b
@@ -18,3 +19,4 @@ module M = struct
 end
 
 module Valid = Semigroup.Validate (M)
+*)

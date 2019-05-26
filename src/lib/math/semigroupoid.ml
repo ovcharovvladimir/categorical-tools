@@ -1,3 +1,4 @@
+(*
 module ClassF (I : T.S) = struct
   open I
 
@@ -13,15 +14,14 @@ module ClassF (I : T.S) = struct
   module MagmoidClassI = Magmoid.ClassF (I)
 
   module Magmoid_ (CV : C [@typeclass (_a, _b, _c) C]) = struct
-    let op a b = failwith ""
+    let op = CV.op
   end
   [@@instance:
-    (module
-     MagmoidClassI.C
-       with type a = _a * _b and type b = _b * _c and type c = _a * _c)]
+    (module MagmoidClassI.C with type a = _a and type b = _b and type c = _c)]
 end
 
 module type S = sig
   module I : T.S
   include ClassF(I).C
 end
+*)

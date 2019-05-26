@@ -1,3 +1,4 @@
+(*
 module type S = sig
   type 'a t
   type ('a, 'b) closure = 'b
@@ -18,3 +19,4 @@ module Validate (I : S) = struct
   module Magma : Magma.S = I
   module Associative : Associative.S = I
 end
+*)

@@ -1,4 +1,4 @@
-module ClassF (I : T.S) = struct
+module F (I : T.S) = struct
   open I
 
   module type C = sig
@@ -6,10 +6,11 @@ module ClassF (I : T.S) = struct
     type b
     type c
 
-    val op : a t -> b t -> c t
+    val op : ?_d:(a, b, c) Binop.C._class -> a t -> b t -> c t
   end
   [@@typeclass]
 
+  (*
   open Binop
 
   module Binop_ (CV : C [@typeclass (_a, _b, _c) C]) = struct
@@ -17,9 +18,5 @@ module ClassF (I : T.S) = struct
   end
   [@@instance:
     (module Binop.Class with type a = _a t and type b = _b t and type c = _c t)]
-end
-
-module type S = sig
-  module I : T.S
-  include ClassF(I).C
+*)
 end
