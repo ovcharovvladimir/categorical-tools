@@ -26,6 +26,7 @@ stdenv.mkDerivation {
   '';
 
   buildInputs = with ocaml-ng.ocamlPackages_4_05; [
+    openssl
     opam
     ocaml
     dune

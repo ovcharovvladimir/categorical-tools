@@ -1,4 +1,20 @@
 (library
  (name math)
  (public_name tools.math)
- (libraries zarith))
+ (libraries zarith ppx_implicits)
+ (flags -ppx ../../_opam/lib/ppx_implicits/ppx_implicits -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_type_reduction -ppx
+   ../../_opam/lib/ppx_implicits/ppx_implicits_final_check -ppx
+   "../../_opam/lib/ppx_inline_test/ppx.exe --as-ppx")
+ (preprocess
+  (action
+   (run sh ../../scripts/macro01.sh %{input-file}))))
