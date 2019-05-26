@@ -1,20 +1,27 @@
-module type S = sig
-  type _ t
-  type ('a, _) closure = 'a
-  type (_, _) op
-  type _ permuted
+module ClassF (I : T.S) = struct
+  open I
 
-  val op : 'a t -> 'b t -> ('a, 'b) op t
-  val reduce : ('a * 'b, 'b * 'c) op t -> ('a * 'c) t
+  module type C = sig
+    type a
+    type b
+    type c
 
-  module AssociativeRules : sig
-    val perm01 : (('a, 'b) op, 'c) op t -> ('a, ('b, 'c) op) op t
-    val perm02 : ('a, ('b, 'c) op) op t -> (('a, 'b) op, 'c) op t
-    val perm03 : ('a, 'b) op t -> ('a permuted, 'b) op permuted t
-    val perm04 : ('a, 'b) op t -> ('a, 'b permuted) op permuted t
+    val op : (a * b) t -> (b * c) t -> (a * c) t
   end
+  [@@typeclass]
+
+  module MagmoidClassI = Magmoid.ClassF (I)
+
+  module Magmoid_ (CV : C [@typeclass (_a, _b, _c) C]) = struct
+    let op a b = failwith ""
+  end
+  [@@instance:
+    (module
+     MagmoidClassI.C
+       with type a = _a * _b and type b = _b * _c and type c = _a * _c)]
 end
 
-module Validate (I : S) = struct
-  module Associative : Associative.S = I
+module type S = sig
+  module I : T.S
+  include ClassF(I).C
 end
