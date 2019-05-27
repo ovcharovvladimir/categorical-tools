@@ -1,22 +1,18 @@
-(*
-module type S = sig
-  type 'a t
-  type ('a, 'b) closure = 'b
-  type ('a, 'b) op = 'a
-  type 'a permuted = 'a
+module F (I : sig
+  type t
+end) =
+struct
+  open I
 
-  val op : 'a t -> 'a t -> 'a t
-
-  module AssociativeRules : sig
-    val perm01 : 'a t -> 'a t
-    val perm02 : 'a t -> 'a t
-    val perm03 : 'a t -> 'a t
-    val perm04 : 'a t -> 'a t
+  module I2 = struct
+    type _ t = I.t
   end
-end
 
-module Validate (I : S) = struct
-  module Magma : Magma.S = I
-  module Associative : Associative.S = I
+  module Magma = Magma.F (I)
+
+  type op = ?_d:(t, t, t) Associative.C._class -> Magma.op
+
+  let op : op =
+    let op ?_d:_ = Magma.op in
+    op
 end
-*)

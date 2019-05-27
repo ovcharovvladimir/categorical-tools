@@ -6,30 +6,28 @@ module type C = sig
 end
 [@@typeclass]
 
-module F (I : T.S) = struct
-  open I
-
-  module type Base = sig
+module FF (OpI : T.S) (IvI : T.S) = struct
+  module type C2 = sig
     type a
 
-    val inv1 : a -> a t
-    val inv2 : a t -> a
-    val norm : a t t -> a
+    val inv1 : a OpI.t -> a IvI.t OpI.t
+    val inv2 : a IvI.t OpI.t -> a OpI.t
   end
   [@@typeclass]
 
-  module Rule01 (CV : Base [@typeclass _a Base]) = struct
+  module Rule01 (CV : C2 [@typeclass _a C2]) = struct
     let inv = CV.inv1
   end
-  [@@instance: (module C with type a = _a and type b = _a t)]
+  [@@instance:
+    (module Invert.C with type a = _a OpI.t and type b = _a IvI.t OpI.t)]
 
-  module Rule02 (CV : Base [@typeclass _a Base]) = struct
+  module Rule02 (CV : C2 [@typeclass _a C2]) = struct
     let inv = CV.inv2
   end
-  [@@instance: (module C with type a = _a t and type b = _a)]
+  [@@instance:
+    (module Invert.C with type a = _a IvI.t OpI.t and type b = _a OpI.t)]
 
-  module Rule03 (CV : Base [@typeclass _a Base]) = struct
-    let inv a = CV.inv1 (CV.norm a)
-  end
-  [@@instance: (module C with type a = _a t t and type b = _a t)]
+  module C = C2
+
+  module type C = C2
 end
